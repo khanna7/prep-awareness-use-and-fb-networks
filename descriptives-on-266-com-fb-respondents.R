@@ -2,34 +2,33 @@
 
   rm(list=ls())
 
+  ## libraries and data
   library(igraph)
-  library(intergraph)
+  load(file="pu-vs-ba-correct.RData")
 
-  load(file="data-on-266-com-fbrespondents-btwn-w1-w2.RData")
+  ## list vertex attributes
+  list.vertex.attributes(w1.com.resp.w.w2.data.ig)
+  list.vertex.attributes(w2.com.resp.ig)
 
-  ## Check networks of common respondents at w1 and w2
-  w1.com.resp.w.w2.data.ig <- asIgraph(w1.com.resp.w.w2.data.net)
-  w2.com.resp.ig <- asIgraph(w2.com.resp.net)
+  ## summarize attributes
+     ## age
+     summary(V(w1.com.resp.w.w2.data.ig)$fb_age[pu.id]); length(V(w1.com.resp.w.w2.data.ig)$fb_age[pu.id])
+     summary(V(w1.com.resp.w.w2.data.ig)$fb_age[ba.id]); length(V(w1.com.resp.w.w2.data.ig)$fb_age[ba.id])
 
-  w1.com.resp.w.w2.data.ig
-  w2.com.resp.ig
+     ## education.new: '0'='grade 0 -12', '1'='HS Diploma or GED',
+     ## '2'='some college', '3'=Associate/Bachelors/Masters'
+     table(V(w1.com.resp.w.w2.data.ig)$education.new[pu.id],exclude=NULL)/
+         sum(table(V(w1.com.resp.w.w2.data.ig)$education.new[pu.id],exclude=NULL))
+     table(V(w1.com.resp.w.w2.data.ig)$education.new[ba.id], exclude=NULL)/
+         sum(table(V(w1.com.resp.w.w2.data.ig)$education.new[ba.id], exclude=NULL))
 
-  ## Check if the ordering is consistent
-  identical(V(w1.com.resp.w.w2.data.ig)$vertex.names, V(w2.com.resp.ig)$vertex.names)
+     ## employment
+     ## '1' = "Full time (30 hours or more a week)"  
+     ## '2' = "Not employed"                         
+     ## '3' = "Part time (less than 30 hours a week)"
+     table(V(w1.com.resp.w.w2.data.ig)$employed.recode[pu.id],exclude=NULL)/
+         sum(table(V(w1.com.resp.w.w2.data.ig)$employed.recode[pu.id],exclude=NULL))
+     table(V(w1.com.resp.w.w2.data.ig)$employed.recode[ba.id],exclude=NULL)/
+         sum(table(V(w1.com.resp.w.w2.data.ig)$employed.recode[ba.id],exclude=NULL))
 
-  ## Check # of PrEP aware in each wave
-  table(V(w1.com.resp.w.w2.data.ig)$prepknow, exclude=NULL)
-  table(V(w2.com.resp.ig)$prepknow, exclude=NULL)
 
-  ## List PU and BA
-  pu.id <- intersect(which(V(w1.com.resp.w.w2.data.ig)$prepknow == 0),
-                     which(V(w2.com.resp.ig)$prepknow == 0)
-                     )
-  pu.names <- (V(w1.com.resp.w.w2.data.ig)$vertex.names)[pu.id]
-
-  ba.id <- intersect(which(V(w1.com.resp.w.w2.data.ig)$prepknow == 0),
-                     which(V(w2.com.resp.ig)$prepknow == 1)
-                     )
-  ba.names <- (V(w1.com.resp.w.w2.data.ig)$vertex.names)[ba.id]
-
-  save.image(file="pu-vs-ba-correct.RData")
