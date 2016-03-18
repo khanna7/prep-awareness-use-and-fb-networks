@@ -104,9 +104,10 @@
                                                )
             summary(unlist(w1.pu.prepuse.num.friends))
 
-            ## percent who were prepaware 
-            w1.pu.percent.prep.aware <- unlist(w1.pu.prepaware.num.friends)/unlist(w1.pu.prepuse.num.friends)
-            summary(w1.pu.percent.prep.aware)
+            ## percent who were prepusing 
+            w1.pu.percent.prep.using <- unlist(w1.pu.prepuse.num.friends)/unlist(w1.pu.friend.prepuse.num)
+            summary(w1.pu.percent.prep.using)
+            length(which(w1.pu.prepuse.num.friends == 0))
 
         ## friends of became aware
             ## num who were prep users
@@ -116,7 +117,7 @@
             summary(unlist(w1.ba.prepuse.num.friends))
 
             ## percent who were prepaware 
-            w1.ba.percent.prep.aware <- unlist(w1.ba.prepaware.num.friends)/unlist(w1.ba.ngbhd.num)
+            w1.ba.percent.prep.aware <- unlist(w1.ba.prepuse.num.friends)/unlist(w1.ba.friend.prepuse.num)
             summary(w1.ba.percent.prep.aware)
                                                    
    ## save data
