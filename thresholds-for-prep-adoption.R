@@ -14,59 +14,110 @@
    load("../w2_com_resp_r0_analysis/prep-awareness-as-networks-wo-ci-w2.RData") #w2 (update to v with ci)
    w2.nn.ave <- nn.ave
 
+   load("pu-vs-ba-correct.RData")
+
    ## nodes persistently unaware of PrEP
-      ## w2 unaware
-      w2.prep.unaware.idx <- which(V(resp.w2.w.data.ig)$prepknow == 0)
-      w2.prep.unaware.names <- V(resp.w2.w.data.ig)$name[w2.prep.unaware.idx]   
-
-      ## w1 unaware
-      w1.prep.unaware.idx <- which(V(w1.com.resp.r0)$prepknow == 0)
-      w1.prep.unaware.names <- V(w1.com.resp.r0)$name[w2.prep.unaware.idx]   
-
-      ## persistently unaware
-      pers.unaware <- intersect(w1.prep.unaware.names, w2.prep.unaware.names)
+      pu.names
 
    ## nodes unaware in wave 1 but aware in w2
-      ## w2 unaware
-      w2.prep.aware.idx <- which(V(resp.w2.w.data.ig)$prepknow == 1)
-      w2.prep.aware.names <- V(resp.w2.w.data.ig)$name[w2.prep.aware.idx]   
-
-      ## became aware
-      bec.aware <- intersect(w1.prep.unaware.names, w2.prep.aware.names)
+      ba.names
 
    ## compare w1 FB networks of pers.unaware to bec.aware
-   ## a. in terms of % of friends who were PrEP aware
-      ## w1 network of pers unaware 
-         w1.idx.pers.unaware <- which(V(w1.com.resp.r0)$name %in% pers.unaware)
-         w1.nn.ave.for.pers.unaware <- w1.nn.ave[w1.idx.pers.unaware]
-         summary(w1.nn.ave.for.pers.unaware)
-
-      ## w1 network of bec aware
-         w1.idx.bec.aware <- which(V(w1.com.resp.r0)$name %in% bec.aware)
-         w1.nn.ave.for.bec.aware <- unlist(w1.nn.ave[w1.idx.bec.aware])
-         summary(w1.nn.ave.for.bec.aware)
-
-   ## b. in terms of num friends
+   ## a. in terms of num friends
          ## pers unaware
-         pers.unaware.fr.prepaware <- list_nghbrs_prepaware[w1.idx.pers.unaware]
-         w1.num.fr.for.pers.unaware <- unlist(lapply(pers.unaware.fr.prepaware, function(x) length(x)))
-         summary(w1.num.fr.for.pers.unaware)
+         deg.of.pu.id.in.w1 <- degree(w1.com.resp.w.w2.data.ig, v=pu.id)
+         summary(deg.of.pu.id.in.w1)
 
          ## became aware
-         bec.aware.fr.prepaware <- list_nghbrs_prepaware[w1.idx.bec.aware]
-         w1.num.fr.for.bec.aware <- unlist(lapply(bec.aware.fr.prepaware, function(x) length(x)))
-         summary(w1.num.fr.for.bec.aware)
+         deg.of.ba.id.in.w1 <- degree(w1.com.resp.w.w2.data.ig, v=ba.id)
+         summary(deg.of.ba.id.in.w1)
 
-   ## c. in terms of num friends who were PrEP aware
-         ## pers unaware
-         w1.num.prepaware.fr.for.pers.unaware <- unlist(lapply(pers.unaware.fr.prepaware,
-                                                               function(x) sum(x)))
-         summary(w1.num.prepaware.fr.for.pers.unaware)
-
+   ## b. in terms of num and % of friends who were PrEP aware
+         ## persistently unaware
+         w1.pu.ngbhd <- neighborhood(w1.com.resp.w.w2.data.ig, order=1, nodes=pu.id)
+         w1.pu.nghbd.names <- lapply(w1.pu.ngbhd, function(x)
+                                                  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "vertex.names",
+                                                                       index=x)
+                                     )
+         w1.pu.ngbhd.num <- lapply(w1.pu.ngbhd, length)
+         w1.pu.prepknow.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
+                                                  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepknow",
+                                                                       index=x)
+                                                 )
          ## became aware
-         w1.num.prepaware.fr.for.bec.aware <- unlist(lapply(bec.aware.fr.prepaware,
-                                                            function(x) sum(x)))
-         summary(w1.num.prepaware.fr.for.bec.aware)            
+         w1.ba.ngbhd <- neighborhood(w1.com.resp.w.w2.data.ig, order=1, nodes=ba.id)
+         w1.ba.nghbd.names <- lapply(w1.ba.ngbhd, function(x)
+                                                  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "vertex.names",
+                                                                       index=x)
+                                     )
+         w1.ba.ngbhd.num <- lapply(w1.ba.ngbhd, length)
+         w1.ba.prepknow.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
+                                                  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepknow",
+                                                                       index=x)
+                                                 )
 
+         ## friends of pers unaware
+            ## num who were prep aware
+            w1.pu.prepaware.num.friends <- lapply(w1.pu.prepknow.status.of.friends, function(x)
+                                                sum(x)
+                                               )
+            summary(unlist(w1.pu.prepaware.num.friends))
+
+            ## percent who were prepaware 
+            w1.pu.percent.prep.aware <- unlist(w1.pu.prepaware.num.friends)/unlist(w1.pu.ngbhd.num)
+            summary(w1.pu.percent.prep.aware)
+
+         ## friends of became aware
+            ## num who were prep aware
+            w1.ba.prepaware.num.friends <- lapply(w1.ba.prepknow.status.of.friends, function(x)
+                                                sum(x)
+                                               )
+            summary(unlist(w1.ba.prepaware.num.friends))
+
+            ## percent who were prepaware 
+            w1.ba.percent.prep.aware <- unlist(w1.ba.prepaware.num.friends)/unlist(w1.ba.ngbhd.num)
+            summary(w1.ba.percent.prep.aware)
+
+   ## c. in terms of num and % of friends who were PrEP using
+         ## persistently unaware
+         w1.pu.prepuse.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
+                                                  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepuse",
+                                                                       index=x)
+                                                 )
+         w1.pu.friend.prepuse.num <- lapply(w1.pu.prepuse.status.of.friends,function(x)
+                                            length(which(!is.na(x)))
+                                            )
+         ## became aware
+         w1.ba.prepuse.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
+                                                  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepuse",
+                                                                       index=x)
+                                                   )
+                                                   
+         w1.ba.friend.prepuse.num <- lapply(w1.ba.prepuse.status.of.friends,function(x)
+                                            length(which(!is.na(x)))
+                                            )
+                                            
+         ## friends of pers unaware
+            ## num who were prep users
+            w1.pu.prepuse.num.friends <- lapply(w1.pu.prepuse.status.of.friends, function(x)
+                                                sum(x, na.rm=TRUE)
+                                               )
+            summary(unlist(w1.pu.prepuse.num.friends))
+
+            ## percent who were prepaware 
+            w1.pu.percent.prep.aware <- unlist(w1.pu.prepaware.num.friends)/unlist(w1.pu.prepuse.num.friends)
+            summary(w1.pu.percent.prep.aware)
+
+        ## friends of became aware
+            ## num who were prep users
+            w1.ba.prepuse.num.friends <- lapply(w1.ba.prepuse.status.of.friends, function(x)
+                                                sum(x, na.rm=TRUE)
+                                               )
+            summary(unlist(w1.ba.prepuse.num.friends))
+
+            ## percent who were prepaware 
+            w1.ba.percent.prep.aware <- unlist(w1.ba.prepaware.num.friends)/unlist(w1.ba.ngbhd.num)
+            summary(w1.ba.percent.prep.aware)
+                                                   
    ## save data
-   save.image(file="fb-friendships-with-prepaware-in-uconnect.RData")
+   save.image(file="fb-friendships-with-prepaware-w-uconnect-participants.RData")
