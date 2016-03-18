@@ -31,4 +31,24 @@
      table(V(w1.com.resp.w.w2.data.ig)$employed.recode[ba.id],exclude=NULL)/
          sum(table(V(w1.com.resp.w.w2.data.ig)$employed.recode[ba.id],exclude=NULL))
 
+   ## Full Facebook network information for PU's and BA's
+      ## Wave 1
+         ## PU
+         pu.in.w1 <- which(V(w1.ig)$name %in% pu.names)
+         w1.fb.deg.of.pu <- degree(w1.ig, v=pu.in.w1)
+         summary(w1.fb.deg.of.pu)
+         ## BA
+         ba.in.w1 <- which(V(w1.ig)$name %in% ba.names)
+         w1.fb.deg.of.ba <- degree(w1.ig, v=ba.in.w1)
+         summary(w1.fb.deg.of.ba)
+
+      ## Wave 2
+         ## PU
+         pu.in.w2 <- which(V(w2.ig)$name %in% pu.names)
+         w2.fb.deg.of.pu <- degree(w2.ig, v=pu.in.w2)
+         summary(w2.fb.deg.of.pu)
+         ## BA
+         ba.in.w2 <- which(V(w2.ig)$name %in% ba.names)
+         w2.fb.deg.of.ba <- degree(w2.ig, v=ba.in.w2)
+         summary(w2.fb.deg.of.ba)
 
