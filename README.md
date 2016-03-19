@@ -12,3 +12,6 @@ Code repository for PrEP awareness and FB networks
    * Compute number and % of friends (of 266 common participants) who are PrEP-aware and PrEP-using: `thresholds-for-prep-adoption.R`  
    * Visualize Wave 1 and Wave 2 networks with fixed coordinates at baseline and followup: `visualize-pu-and-ba.R`
    * (Old visualization, not relevant: `visualization.R`)
+
+## CAUTION
+   The first item in the list returned byt he `neighborhood` function in igraph, is the node whose neighborhood is being computed. 
