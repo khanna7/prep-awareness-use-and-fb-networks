@@ -32,41 +32,41 @@
       ## persistently unaware
          ## btwn
          num.top300.btwn.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
-                                                   length(which(w1_top300_btwn[,2] %in% w1.pu.ngbhd.names[x]))
+                                                   length(which(w1_top300_btwn[,2] %in% x))
                                                    )
          unlist(num.top300.btwn.among.pu.friends)
          summary(unlist(num.top300.btwn.among.pu.friends))
          ## evcent
          num.top300.evcent.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
-                                                    length(which(w1_top300_evcent[,2] %in% w1.pu.ngbhd.names[x]))
+                                                    length(which(w1_top300_evcent[,2] %in% x))
                                                    )
          unlist(num.top300.evcent.among.pu.friends)
          summary(unlist(num.top300.evcent.among.pu.friends))
 
          ## kp
          num.top300.kp.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
-                                                    length(which(w1_top300_kp[,2] %in% w1.pu.ngbhd.names[x]))
+                                                    length(which(w1_top300_kp[,2] %in% x))
                                                    )
          unlist(num.top300.kp.among.pu.friends)
          summary(unlist(num.top300.kp.among.pu.friends))
 
          ## bridging
          num.top300.brid.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
-                                                    length(which(w1_top300_brid[,2] %in% w1.pu.ngbhd.names[x]))
+                                                    length(which(w1_top300_brid[,2] %in% x))
                                                    )
          unlist(num.top300.brid.among.pu.friends)
          summary(unlist(num.top300.brid.among.pu.friends))
 
          ## ens
          num.top300.ens.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
-                                                    length(which(w1_top300_ens[,2] %in% w1.pu.ngbhd.names[x]))
+                                                    length(which(w1_top300_ens[,2] %in% x))
                                                    )
          unlist(num.top300.ens.among.pu.friends)
          summary(unlist(num.top300.ens.among.pu.friends))
 
          ## constraint
          num.low300.con.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
-                                                    length(which(w1_low300_con[,2] %in% w1.pu.ngbhd.names[x]))
+                                                    length(which(w1_low300_con[,2] %in% x))
                                                    )
          unlist(num.low300.con.among.pu.friends)
          summary(unlist(num.low300.con.among.pu.friends))
@@ -74,90 +74,44 @@
       ## became aware
          ## btwn
          num.top300.btwn.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
-                                                   length(which(w1_top300_btwn[,2] %in% w1.ba.ngbhd.names[x]))
+                                                   length(which(w1_top300_btwn[,2] %in% x))
                                                    )
          unlist(num.top300.btwn.among.ba.friends)
          summary(unlist(num.top300.btwn.among.ba.friends))
          ## evcent
          num.top300.evcent.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
-                                                    length(which(w1_top300_evcent[,2] %in% w1.ba.ngbhd.names[x]))
+                                                    length(which(w1_top300_evcent[,2] %in% x))
                                                    )
          unlist(num.top300.evcent.among.ba.friends)
          summary(unlist(num.top300.evcent.among.ba.friends))
 
          ## kp
          num.top300.kp.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
-                                                    length(which(w1_top300_kp[,2] %in% w1.ba.ngbhd.names[x]))
+                                                    length(which(w1_top300_kp[,2] %in% x))
                                                    )
          unlist(num.top300.kp.among.ba.friends)
          summary(unlist(num.top300.kp.among.ba.friends))
 
          ## bridging
          num.top300.brid.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
-                                                    length(which(w1_top300_brid[,1] %in% w1.ba.ngbhd.names[x]))
+                                                    length(which(w1_top300_brid[,1] %in% x))
                                                    )
          unlist(num.top300.brid.among.ba.friends)
          summary(unlist(num.top300.brid.among.ba.friends))
 
          ## ens
          num.top300.ens.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
-                                                    length(which(w1_top300_ens[,2] %in% w1.ba.ngbhd.names[x]))
+                                                    length(which(w1_top300_ens[,2] %in% x))
                                                    )
          unlist(num.top300.ens.among.ba.friends)
          summary(unlist(num.top300.ens.among.ba.friends))
 
          ## constraint
          num.low300.con.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
-                                                    length(which(w1_low300_con[,2] %in% w1.ba.ngbhd.names[x]))
+                                                    length(which(w1_low300_con[,2] %in% x))
                                                    )
          unlist(num.low300.con.among.ba.friends)
          summary(unlist(num.low300.con.among.ba.friends))
-
-
-   ############################################################################################
-   ######## OLD STUFF BELOW ###################################################################
-   ######## USE ONLY IF NECESSARY##############################################################
-   ############################################################################################
-   ## compare w1 FB networks of pers.unaware to bec.aware
-   ## a. in terms of % of friends who are amongst top300 by various categories
-
-         ## pers.unaware
-         w1.nn.ave.btwn.for.pers.unaware <- w1.nn.ave.btwn[w1.idx.pers.unaware]
-         summary(w1.nn.ave.btwn.for.pers.unaware)
-
-         w1.nn.ave.evcent.for.pers.unaware <- w1.nn.ave.evcent[w1.idx.pers.unaware]
-         summary(w1.nn.ave.evcent.for.pers.unaware)
-
-         w1.nn.ave.brid.for.pers.unaware <- w1.nn.ave.brid[w1.idx.pers.unaware]
-         summary(w1.nn.ave.brid.for.pers.unaware)
-
-         w1.nn.ave.kp.for.pers.unaware <- w1.nn.ave.kp[w1.idx.pers.unaware]
-         summary(w1.nn.ave.kp.for.pers.unaware)
-
-         w1.nn.ave.ens.for.pers.unaware <- w1.nn.ave.ens[w1.idx.pers.unaware]
-         summary(w1.nn.ave.ens.for.pers.unaware)
-
-         w1.nn.ave.con.for.pers.unaware <- w1.nn.ave.con[w1.idx.pers.unaware]
-         summary(w1.nn.ave.con.for.pers.unaware)
-
-         ## bec.aware
-         w1.nn.ave.btwn.for.bec.aware <- w1.nn.ave.btwn[w1.idx.bec.aware]
-         summary(w1.nn.ave.btwn.for.bec.aware)
-
-         w1.nn.ave.evcent.for.bec.aware <- w1.nn.ave.evcent[w1.idx.bec.aware]
-         summary(w1.nn.ave.evcent.for.bec.aware)
-
-         w1.nn.ave.brid.for.bec.aware <- w1.nn.ave.brid[w1.idx.bec.aware]
-         summary(w1.nn.ave.brid.for.bec.aware)
-
-         w1.nn.ave.kp.for.bec.aware <- w1.nn.ave.kp[w1.idx.bec.aware]
-         summary(w1.nn.ave.kp.for.bec.aware)
-
-         w1.nn.ave.ens.for.bec.aware <- w1.nn.ave.ens[w1.idx.bec.aware]
-         summary(w1.nn.ave.ens.for.bec.aware)
-
-         w1.nn.ave.con.for.bec.aware <- w1.nn.ave.con[w1.idx.bec.aware]
-         summary(w1.nn.ave.con.for.bec.aware)
 
    ## save data
    save.image(file="top300-bridges-in-w1-neighbor-networks.RData")
