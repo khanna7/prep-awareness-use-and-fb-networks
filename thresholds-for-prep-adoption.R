@@ -35,6 +35,7 @@
    ## b. in terms of num and % of friends who were PrEP aware
          ## persistently unaware
          w1.pu.ngbhd <- neighborhood(w1.com.resp.w.w2.data.ig, order=1, nodes=pu.id)
+         w1.pu.ngbhd <- lapply(w1.pu.ngbhd, function (x) x[-1]) #to not count the seed vertex
          w1.pu.nghbd.names <- lapply(w1.pu.ngbhd, function(x)
                                                   get.vertex.attribute(w1.com.resp.w.w2.data.ig, "vertex.names",
                                                                        index=x)
@@ -46,6 +47,7 @@
                                                  )
          ## became aware
          w1.ba.ngbhd <- neighborhood(w1.com.resp.w.w2.data.ig, order=1, nodes=ba.id)
+         w1.ba.ngbhd <- lapply(w1.ba.ngbhd, function (x) x[-1]) #to not count the seed vertex
          w1.ba.nghbd.names <- lapply(w1.ba.ngbhd, function(x)
                                                   get.vertex.attribute(w1.com.resp.w.w2.data.ig, "vertex.names",
                                                                        index=x)
