@@ -1,4 +1,4 @@
-## calculate threshold for adoption of PrEP by egos, as a function of the % of their friends
+o## calculate threshold for adoption of PrEP by egos, as a function of the % of their friends
 ## who are PrEP aware
 
    rm(list=ls())
