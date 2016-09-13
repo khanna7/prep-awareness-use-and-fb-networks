@@ -19,22 +19,28 @@ ba.id
 
 ## FIND DATA FOR NEIGHBORS
    ## age
-   w1.ba.agecalc.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
-    get.vertex.attribute(w1.com.resp.w.w2.data.ig, "fb_age",
-                         index=x)
-                                           )
-   w1.pu.agecalc.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
-    get.vertex.attribute(w1.com.resp.w.w2.data.ig, "fb_age",
-                         index=x)
-                                           )
 
    ## hivprogever
+   V(w1.com.resp.w.w2.data.ig)$hivprogever <-
+       V(w1.com.resp.w.w2.data.ig)$hivprogever - 1
+
    w1.ba.hivprogever.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
     get.vertex.attribute(w1.com.resp.w.w2.data.ig, "hivprogever",
                          index=x)
                                            )
+   w1.ba.hivprogever.num.friends <- lapply(w1.ba.hivprogever.status.of.friends,
+                                           function(x)
+                                               sum(x, na.rm=TRUE)
+                                               )
+   summary(unlist(w1.ba.hivprogever.num.friends))
+
    w1.pu.hivprogever.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
     get.vertex.attribute(w1.com.resp.w.w2.data.ig, "hivprogever",
                          index=x)
                                            )
+   w1.pu.hivprogever.num.friends <- lapply(w1.pu.hivprogever.status.of.friends,
+                                           function(x)
+                                               sum(x, na.rm=TRUE)
+                                               )
+   summary(unlist(w1.pu.hivprogever.num.friends))
 
