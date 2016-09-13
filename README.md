@@ -13,7 +13,8 @@ Code repository for PrEP awareness and FB networks
    * Visualize Wave 1 and Wave 2 networks with fixed coordinates at baseline and followup: `visualize-pu-and-ba.R`
    * (Old visualization, not relevant: `visualization.R`)
    
-### To add more properties to the network, go to `../w1_w2_com_respondents_from_igraph/w1_com_resp_r0_analysis/correlate_pca_outcome.R`
+### To add more properties to the network, 
+    * go to `../w1_w2_com_respondents_from_igraph/w1_com_resp_r0_analysis/correlate_pca_outcome.R`
 
 ## CAUTION
    The first item in the list returned byt he `neighborhood` function in igraph, is the node whose neighborhood is being computed. 
