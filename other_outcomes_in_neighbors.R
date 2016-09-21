@@ -166,3 +166,89 @@ summary(unlist(w1.pu.comb.ball.gay.num.friends))
 
 w1.pu.comb.ball.gay.pct.friends <- unlist(w1.pu.comb.ball.gay.num.friends)/deg.of.pu.id.in.w1
 summary(w1.pu.comb.ball.gay.pct.friends)
+
+## prepknow
+## 0 = no
+## 1 = yes
+
+#V(w1.com.resp.w.w2.data.ig)$prepknow <-
+  #V(w1.com.resp.w.w2.data.ig)$prepknow - 1
+
+w1.ba.prepknow.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
+  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepknow",
+                       index=x)
+)
+w1.ba.prepknow.num.friends <- lapply(w1.ba.prepknow.status.of.friends,
+                                          sum)
+
+
+summary(unlist(w1.ba.prepknow.num.friends))
+w1.ba.prepknow.pct.friends <- unlist(w1.ba.prepknow.num.friends)/deg.of.ba.id.in.w1
+summary(w1.ba.prepknow.pct.friends)
+
+w1.pu.prepknow.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
+  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepknow",
+                       index=x)
+)
+w1.pu.prepknow.num.friends <- lapply(w1.pu.prepknow.status.of.friends,
+                                          sum)
+                                            
+
+summary(unlist(w1.pu.prepknow.num.friends))
+
+w1.pu.prepknow.pct.friends <- unlist(w1.pu.prepknow.num.friends)/deg.of.pu.id.in.w1
+summary(w1.pu.prepknow.pct.friends)
+
+## prepuse
+## 0 = no
+## 1 = yes
+
+#V(w1.com.resp.w.w2.data.ig)$prepknow <-
+#V(w1.com.resp.w.w2.data.ig)$prepknow - 1
+
+w1.ba.prepuse.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
+  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepuse",
+                       index=x)
+)
+w1.ba.prepuse.num.friends <- lapply(w1.ba.prepuse.status.of.friends,
+                                     function (x) sum(x, na.rm=TRUE))
+
+
+summary(unlist(w1.ba.prepuse.num.friends))
+
+V(w1.com.resp.w.w2.data.ig)$hiveverdiag <- V(w1.com.resp.w.w2.data.ig)$hiveverdiag - 1
+w1.ba.hiv.status.of.friends <- lapply(w1.ba.ngbhd, function(x)
+  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "hiveverdiag",
+                       index=x)
+)
+
+w1.ba.hiv.neg.num.friends <- lapply(w1.ba.hiv.status.of.friends,         
+                                function(x)
+                                  length(which(x == 0))
+                              )
+
+w1.ba.prepuse.pct.friends <- unlist(w1.ba.prepuse.num.friends)/unlist(w1.ba.hiv.neg.num.friends)
+summary(w1.ba.prepuse.pct.friends)
+
+w1.pu.prepuse.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
+  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "prepuse",
+                       index=x)
+)
+w1.pu.prepuse.num.friends <- lapply(w1.pu.prepuse.status.of.friends,
+                                     function (x) sum(x, na.rm=TRUE))
+
+
+summary(unlist(w1.pu.prepuse.num.friends))
+
+w1.pu.hiv.status.of.friends <- lapply(w1.pu.ngbhd, function(x)
+  get.vertex.attribute(w1.com.resp.w.w2.data.ig, "hiveverdiag",
+                       index=x)
+)
+
+w1.pu.hiv.neg.num.friends <- lapply(w1.pu.hiv.status.of.friends,         
+                                    function(x)
+                                      length(which(x == 0))
+)
+
+w1.pu.prepuse.pct.friends <- unlist(w1.pu.prepuse.num.friends)/unlist(w1.pu.hiv.neg.num.friends)
+summary(w1.pu.prepuse.pct.friends)
