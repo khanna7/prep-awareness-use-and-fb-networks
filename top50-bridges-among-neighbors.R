@@ -17,13 +17,15 @@
                                                get.vertex.attribute(w1.com.resp.w.w2.data.ig,
                                                                     "vertex.names", index=x)
                                   )
+      deg.pu <- lapply(w1.pu.ngbhd.names, length)
 
       ##  became aware
       w1.ba.ngbhd.names <- lapply(w1.ba.ngbhd, function (x)
                                                get.vertex.attribute(w1.com.resp.w.w2.data.ig,
                                                                     "vertex.names", index=x)
                                   )
-
+      deg.ba <- lapply(w1.ba.ngbhd.names, length)
+   
    ## compute the proportion of top 50 bridges, for each measure, among the FB friends
    ## of PU's, and BA's
 
@@ -40,13 +42,15 @@
                                                    )
          unlist(num.top50.evcent.among.pu.friends)
          summary(unlist(num.top50.evcent.among.pu.friends))
-
+         summary(unlist(num.top50.evcent.among.pu.friends)/unlist(deg.pu))
+   
          ## kp
          num.top50.kp.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
                                                     length(which(w1_top50_kp[,2] %in% x))
                                                    )
          unlist(num.top50.kp.among.pu.friends)
          summary(unlist(num.top50.kp.among.pu.friends))
+         summary(unlist(num.top50.kp.among.pu.friends)/unlist(deg.pu))
 
          ## bridging
          num.top50.brid.among.pu.friends <- lapply(w1.pu.ngbhd.names,function(x)
@@ -82,14 +86,16 @@
                                                    )
          unlist(num.top50.evcent.among.ba.friends)
          summary(unlist(num.top50.evcent.among.ba.friends))
-
+         summary(unlist(num.top50.evcent.among.ba.friends)/unlist(deg.ba))
+         
          ## kp
          num.top50.kp.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
                                                     length(which(w1_top50_kp[,2] %in% x))
                                                    )
          unlist(num.top50.kp.among.ba.friends)
          summary(unlist(num.top50.kp.among.ba.friends))
-
+         summary(unlist(num.top50.kp.among.ba.friends)/unlist(deg.ba))
+   
          ## bridging
          num.top50.brid.among.ba.friends <- lapply(w1.ba.ngbhd.names,function(x)
                                                     length(which(w1_top50_brid[,1] %in% x))
