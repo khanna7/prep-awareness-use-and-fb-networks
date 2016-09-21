@@ -18,13 +18,15 @@
                                                                     "vertex.names", index=x)
                                   )
       summary(unlist(lapply(w1.pu.ngbhd.names, length)))
+      deg.pu <- lapply(w1.pu.ngbhd.names, length)
+                       
       ##  became aware
       w1.ba.ngbhd.names <- lapply(w1.ba.ngbhd, function (x)
                                                get.vertex.attribute(w1.com.resp.w.w2.data.ig,
                                                                     "vertex.names", index=x)
                                   )
       summary(unlist(lapply(w1.ba.ngbhd.names, length)))
-
+      deg.ba <- lapply(w1.ba.ngbhd.names, length)
 
    ## compute the proportion of top 50 bridges, for each measure, among the FB friends
    ## of PU's and BA's
