@@ -52,3 +52,19 @@
          w2.fb.deg.of.ba <- degree(w2.ig, v=ba.in.w2)
          summary(w2.fb.deg.of.ba)
 
+     ## For 266 nodes in common between waves 1 and 2, compute
+        ## sizes of Facebook networks (including nonrespondents)
+        ## (adapted from simon's email dated 8/6/2015)
+        com.resp.w1.ig.idx <- which(V(w1.ig)$name %in% 
+                                      V(w1.com.resp.w.w2.data.ig)$vertex.names)
+        w1.ig.266.com.ls <- incident_edges(w1.ig, com.resp.w1.ig.idx)
+        all.w1.ig.266.com.ls <- do.call(union, w1.ig.266.com.ls) 
+        w1.ig.266.com.inc.graph <- subgraph.edges(w1.ig, all.w1.ig.266.com.ls)
+        vcount(w1.ig.266.com.inc.graph); ecount(w1.ig.266.com.inc.graph)
+        
+        com.resp.w2.ig.idx <- which(V(w2.ig)$name %in% V(w1.com.resp.w.w2.data.ig)$vertex.names)
+        w2.ig.266.com.ls <- incident_edges(w2.ig, com.resp.w2.ig.idx)
+        all.w2.ig.266.com.ls <- do.call(union, w2.ig.266.com.ls)
+        w2.ig.266.com.inc.graph <- subgraph.edges(w2.ig, all.w2.ig.266.com.ls)
+        vcount(w2.ig.266.com.inc.graph); ecount(w2.ig.266.com.inc.graph)
+        
