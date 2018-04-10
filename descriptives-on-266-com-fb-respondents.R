@@ -6,6 +6,9 @@
   library(igraph)
   load(file="pu-vs-ba-correct.RData")
 
+  ## convert w2.ig to undirected
+  w2.ig <- as.undirected(w2.ig)
+  
   ## list vertex attributes
   list.vertex.attributes(w1.com.resp.w.w2.data.ig)
   list.vertex.attributes(w2.com.resp.ig)
@@ -67,4 +70,24 @@
         all.w2.ig.266.com.ls <- do.call(union, w2.ig.266.com.ls)
         w2.ig.266.com.inc.graph <- subgraph.edges(w2.ig, all.w2.ig.266.com.ls)
         vcount(w2.ig.266.com.inc.graph); ecount(w2.ig.266.com.inc.graph)
+  
+        ## Common edges between waves 1 and 2
+        is.directed(w1.ig.266.com.inc.graph)
+        is.directed(w2.ig.266.com.inc.graph) 
+     
+        w1.ig.266.com.inc.graph.el <- as_edgelist(w1.ig.266.com.inc.graph)
+        w2.ig.266.com.inc.graph.el <- as_edgelist(w2.ig.266.com.inc.graph)
+  
+        dim(w1.ig.266.com.inc.graph.el); dim(w2.ig.266.com.inc.graph.el)
+        
+        com.els <- rbind(w1.ig.266.com.inc.graph.el, w1.ig.266.com.inc.graph.el)
+        nrow(com.els) == nrow(w1.ig.266.com.inc.graph.el) + nrow(w2.ig.266.com.inc.graph.el)     
+  
+        dim(com.els[duplicated(com.els), ,drop = FALSE])
+        nrow(w1.ig.266.com.inc.graph.el) == nrow(com.els[duplicated(com.els), ,drop = FALSE])
+        
+        nrow(w2.ig.266.com.inc.graph.el) - nrow(w1.ig.266.com.inc.graph.el)
+  
+  ## save
+  save.image(file="descriptes-on-266-com-fb-respondents.RData")
         
