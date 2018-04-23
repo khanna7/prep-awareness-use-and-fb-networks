@@ -58,7 +58,11 @@
   
     int.df1.df2 <- intersect(df1, df2) #load dplyr to get this result
     dim(int.df1.df2)      
-        
+    length(which(df1 %in% df2))
+
+    com.els <- rbind(w1.ig.266.com.inc.graph.el, w2.ig.266.com.inc.graph.el)
+    dim(com.els[duplicated(com.els), ,drop = FALSE])
+  
  ## permute nodes in W1 network so respondents are at the top
     vnames <- V(w1.ig.266.com.inc.graph)$name
     resp.1 <- which(substr(vnames, 1, 4) == "1111")
@@ -97,24 +101,67 @@
     deg.w1.ig.266.com.inc.graph <- degree(w1.ig.266.com.inc.graph, v=w1.ig.266.com.inc.graph.resp.idx)
     deg.w2.ig.266.com.inc.graph <- degree(w2.ig.266.com.inc.graph, v=w2.ig.266.com.inc.graph.resp.idx)
         
-    
+ ## Find edges that are maintained between waves 1 and 2
+    identical(com.resp.w1.ig.names, com.resp.w2.ig.names) 
         
+    ## edges incidence on each common respondent node in waves 1 & 2
+    w1.edges.com.resp <- lapply(com.resp.w1.ig.names,
+                                function(x) incident(w1.ig.266.com.inc.graph, x))
+    names(w1.edges.com.resp) <- com.resp.w1.ig.names
+    w1.edges.com.resp <- lapply(w1.edges.com.resp, as_ids)
+  
+    w2.edges.com.resp <- lapply(com.resp.w2.ig.names,
+                              function(x) incident(w2.ig.266.com.inc.graph, x))
+    names(w2.edges.com.resp) <- com.resp.w2.ig.names
+    w2.edges.com.resp <- lapply(w2.edges.com.resp, as_ids)
+ 
+ ## compute turnover statistics
+    per.resp.edges.sustained <- 
+    unlist(
+    lapply(1:length(com.resp.w1.ig.names),
+             function (x)
+             length(which(w1.edges.com.resp[[x]] %in% w2.edges.com.resp[[x]])))
+    )
+ 
+   per.resp.edges.dissolved <- 
+    unlist(
+      lapply(1:length(com.resp.w1.ig.names),
+             function (x)
+               length(which(!w1.edges.com.resp[[x]] %in% w2.edges.com.resp[[x]])))
+    )
+  
+  per.resp.edges.formed <- 
+    unlist(
+      lapply(1:length(com.resp.w1.ig.names),
+             function (x)
+               length(which(!w2.edges.com.resp[[x]] %in% w1.edges.com.resp[[x]])))
+    )
+  
+  sum(deg.w1.ig.266.com.inc.graph)
+  sum(deg.w2.ig.266.com.inc.graph)
+  
+  summary(per.resp.edges.sustained); #sum(per.resp.edges.sustained) 
+  #don't use sum for these computations of size because of 
+  # double-counting R-R ties. Use intersect/rbind method from above. 
+  summary(per.resp.edges.dissolved); #sum(per.resp.edges.dissolved)
+  summary(per.resp.edges.formed); #sum(per.resp.edges.formed)
 
   
+  ## compute metricvs of interest
+    ## example
+    s1 <- w1.edges.com.resp[1:5]
+    s2 <- w2.edges.com.resp[1:5]
+    
+    s1.id <- lapply(s1, as_ids)
+    s2.id <- lapply(s2, as_ids)
+    
+    length(which(s1.id[[1]] %in% s2.id[[1]]))
+    length(which(s2.id[[1]] %in% s1.id[[1]]))
   
-  w1.resp.name.idx <- 
-    union(which(substr(V(w1.ig.266.com.inc.graph)$name, 1, 4) == "1111"),
-              which(substr(V(w1.ig.266.com.inc.graph)$name, 1, 4) == "2222"))
+    length(which(!s1.id[[1]] %in% s2.id[[1]]))
+    length(which(!s2.id[[1]] %in% s1.id[[1]]))
   
-         w2.resp.name.idx <- 
-    union(which(substr(V(w2.ig.266.com.inc.graph)$name, 1, 4) == "1111"),
-          which(substr(V(w2.ig.266.com.inc.graph)$name, 1, 4) == "2222"))
-  
-        w1.resp.name <- (V(w1.ig.266.com.inc.graph)$name)[w1.resp.name.idx]
-        w2.resp.name <- (V(w2.ig.266.com.inc.graph)$name)[w2.resp.name.idx]
-   
-        intersect(w1.resp.name, w2.resp.name)
   
   ## save
-  save.image(file="prep-chicago-descriptives.RData")
+    save.image(file="prep-chicago-descriptives.RData")
         
