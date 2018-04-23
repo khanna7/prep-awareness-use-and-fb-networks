@@ -146,21 +146,23 @@
   summary(per.resp.edges.dissolved); #sum(per.resp.edges.dissolved)
   summary(per.resp.edges.formed); #sum(per.resp.edges.formed)
 
+  ## create listing
+  identical(names(w1.edges.com.resp), names(w2.edges.com.resp))
+  data.to.save <- cbind(names(w2.edges.com.resp),
+                                deg.w1.ig.266.com.inc.graph,
+                                deg.w2.ig.266.com.inc.graph,
+                                per.resp.edges.sustained,
+                                per.resp.edges.dissolved,
+                                per.resp.edges.formed
+                                )
+  colnames(data.to.save) <- c("su_id",
+                              "degree at w1",
+                              "degree at w2",
+                              "n edges sustained",
+                              "n edges dissolved",
+                              "n edges formed")
   
-  ## compute metricvs of interest
-    ## example
-    s1 <- w1.edges.com.resp[1:5]
-    s2 <- w2.edges.com.resp[1:5]
-    
-    s1.id <- lapply(s1, as_ids)
-    s2.id <- lapply(s2, as_ids)
-    
-    length(which(s1.id[[1]] %in% s2.id[[1]]))
-    length(which(s2.id[[1]] %in% s1.id[[1]]))
-  
-    length(which(!s1.id[[1]] %in% s2.id[[1]]))
-    length(which(!s2.id[[1]] %in% s1.id[[1]]))
-  
+  write.csv(data.to.save, "fb-resp-turnover-stats.csv")
   
   ## save
     save.image(file="prep-chicago-descriptives.RData")
